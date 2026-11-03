@@ -4,13 +4,12 @@ import ma.enset.bankaccountmicroservice.entities.BankAccount;
 import ma.enset.bankaccountmicroservice.exceptions.AccountNotFoundException;
 import ma.enset.bankaccountmicroservice.repository.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class BankAccountRestController {
     @Autowired
     BankAccountRepository bankAccountRepository;
