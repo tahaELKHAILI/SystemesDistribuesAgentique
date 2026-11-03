@@ -13,7 +13,6 @@ import java.util.Date;
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class BankAccount {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private Date createdAt;
     private Double balance;
