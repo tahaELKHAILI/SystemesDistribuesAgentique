@@ -1,6 +1,8 @@
 package ma.enset.bankaccountservice.web;
 
 import ma.enset.bankaccountservice.domain.BankAccount;
+import ma.enset.bankaccountservice.dtos.BankAccountRequestDto;
+import ma.enset.bankaccountservice.dtos.BankAccountResponseDto;
 import ma.enset.bankaccountservice.exceptions.AccountNotFoundException;
 import ma.enset.bankaccountservice.service.BankAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +16,18 @@ public class BankAccountRestController {
     BankAccountService bankAccountService;
 
     @GetMapping("/bankAccounts")
-    public List<BankAccount> getAccounts(){
+    public List<BankAccountResponseDto> getAccounts(){
         return bankAccountService.getAccounts();
     }
 
     @GetMapping("/bankAccounts/{id}")
-    public BankAccount getAccount(@PathVariable String id) throws AccountNotFoundException {
+    public BankAccountResponseDto getAccount(@PathVariable String id) throws AccountNotFoundException {
         return bankAccountService.getAccount(id);
     }
 
     @PostMapping("/bankAccounts")
-    public BankAccount addAccount(@RequestBody BankAccount bankAccount){
-        return bankAccountService.addAccount(bankAccount);
+    public BankAccountResponseDto addAccount(@RequestBody BankAccountRequestDto bankAccountRequestDto){
+        return bankAccountService.addAccount(bankAccountRequestDto);
     }
 
     @ExceptionHandler

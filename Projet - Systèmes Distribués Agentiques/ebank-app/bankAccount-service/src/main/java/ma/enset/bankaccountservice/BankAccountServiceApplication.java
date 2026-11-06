@@ -1,6 +1,7 @@
 package ma.enset.bankaccountservice;
 
 import ma.enset.bankaccountservice.domain.BankAccount;
+import ma.enset.bankaccountservice.dtos.BankAccountRequestDto;
 import ma.enset.bankaccountservice.enums.AccountType;
 import ma.enset.bankaccountservice.service.BankAccountService;
 import org.springframework.boot.CommandLineRunner;
@@ -18,23 +19,23 @@ public class BankAccountServiceApplication {
     @Bean
     CommandLineRunner start(BankAccountService bankAccountService){
         return args -> {
-            BankAccount bankAccount1 = BankAccount.builder()
+            BankAccountRequestDto bankAccountRequestDto1 = BankAccountRequestDto.builder()
                     .type(AccountType.CURRENT_ACCOUNT)
                     .currency("EUR")
                     .balance(5000.0)
                     .customerId("1234")
                     .build();
 
-            bankAccountService.addAccount(bankAccount1);
+            bankAccountService.addAccount(bankAccountRequestDto1);
 
-            BankAccount bankAccount2 = BankAccount.builder()
+            BankAccountRequestDto bankAccountRequestDto2 = BankAccountRequestDto.builder()
                     .type(AccountType.SAVING_ACCOUNT)
                     .currency("EUR")
                     .balance(3000.33)
                     .customerId("1234")
                     .build();
 
-            bankAccountService.addAccount(bankAccount2);
+            bankAccountService.addAccount(bankAccountRequestDto2);
         };
     }
 }
