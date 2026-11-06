@@ -24,12 +24,12 @@ public class CustomerRestController {
     }
 
     @PostMapping("/customers")
-    public Customer addCustomer(Customer customer){
+    public Customer addCustomer(@RequestBody Customer customer){
         return customerService.addCustomer(customer);
     }
 
     @PutMapping("/customers/{id}")
-    public Customer updateCustomer(@PathVariable String id, Customer customer) throws CustomerNotFoundException{
+    public Customer updateCustomer(@PathVariable String id, @RequestBody Customer customer) throws CustomerNotFoundException{
         return customerService.updateCustomer(id, customer);
     }
 
