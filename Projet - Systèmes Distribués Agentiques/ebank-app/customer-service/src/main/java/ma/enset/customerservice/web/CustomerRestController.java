@@ -1,6 +1,7 @@
 package ma.enset.customerservice.web;
 
 import ma.enset.customerservice.domain.Customer;
+import ma.enset.customerservice.dtos.CustomerRequestDto;
 import ma.enset.customerservice.exceptions.CustomerNotFoundException;
 import ma.enset.customerservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,13 @@ public class CustomerRestController {
     }
 
     @PostMapping("/customers")
-    public Customer addCustomer(@RequestBody Customer customer){
-        return customerService.addCustomer(customer);
+    public Customer addCustomer(@RequestBody CustomerRequestDto customerRequestDto){
+        return customerService.addCustomer(customerRequestDto);
     }
 
     @PutMapping("/customers/{id}")
-    public Customer updateCustomer(@PathVariable String id, @RequestBody Customer customer) throws CustomerNotFoundException{
-        return customerService.updateCustomer(id, customer);
+    public Customer updateCustomer(@PathVariable String id, @RequestBody CustomerRequestDto customerRequestDto) throws CustomerNotFoundException{
+        return customerService.updateCustomer(id, customerRequestDto);
     }
 
     @DeleteMapping("/customers/{id}")

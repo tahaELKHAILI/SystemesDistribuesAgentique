@@ -1,6 +1,7 @@
 package ma.enset.customerservice;
 
 import ma.enset.customerservice.domain.Customer;
+import ma.enset.customerservice.dtos.CustomerRequestDto;
 import ma.enset.customerservice.service.CustomerService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,19 +20,19 @@ public class CustomerServiceApplication {
     @Bean
     CommandLineRunner start(CustomerService customerService){
         return args -> {
-            Customer customer = Customer.builder()
+            CustomerRequestDto customerRequestDto = CustomerRequestDto.builder()
                     .name("user")
                     .email("user@gmail.com")
                     .build();
 
-            customerService.addCustomer(customer);
+            customerService.addCustomer(customerRequestDto);
 
-            Customer customer1 = Customer.builder()
+            CustomerRequestDto customerRequestDto2 = CustomerRequestDto.builder()
                     .name("user2")
                     .email("user2@gmail.com")
                     .build();
 
-            customerService.addCustomer(customer1);
+            customerService.addCustomer(customerRequestDto2);
         };
     }
 }

@@ -2,6 +2,7 @@ package ma.enset.customerservice.service;
 
 import jakarta.transaction.Transactional;
 import ma.enset.customerservice.domain.Customer;
+import ma.enset.customerservice.dtos.CustomerRequestDto;
 import ma.enset.customerservice.exceptions.CustomerNotFoundException;
 import ma.enset.customerservice.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +19,23 @@ public class CustomerServiceImpl implements CustomerService {
     CustomerRepository customerRepository;
 
     @Override
-    public Customer addCustomer(Customer customer) {
+    public Customer addCustomer(CustomerRequestDto customerRequestDto) {
         Customer newCustomer = Customer.builder()
                 .id(UUID.randomUUID().toString())
-                .name(customer.getName())
-                .email(customer.getEmail())
+                .name(customerRequestDto.getName())
+                .email(customerRequestDto.getEmail())
                 .build();
         Customer savedAccount = customerRepository.save(newCustomer);
         return savedAccount;
     }
 
     @Override
-    public Customer updateCustomer(String id ,Customer customer) throws CustomerNotFoundException {
+    public Customer updateCustomer(String id ,CustomerRequestDto customerRequestDto) throws CustomerNotFoundException {
         Customer oldCustomer = customerRepository.findById(id).orElseThrow(()->
                 new CustomerNotFoundException(String.format("Customer with id %s does not exist",id)));
 
-        if(customer.getName()!=null) oldCustomer.setName(customer.getName());
-        if(customer.getEmail()!=null) oldCustomer.setEmail(customer.getEmail());
+        if(customerRequestDto.getName()!=null) oldCustomer.setName(customerRequestDto.getName());
+        if(customerRequestDto.getEmail()!=null) oldCustomer.setEmail(customerRequestDto.getEmail());
 
         Customer updatedAccount = customerRepository.save(oldCustomer);
         return updatedAccount;
