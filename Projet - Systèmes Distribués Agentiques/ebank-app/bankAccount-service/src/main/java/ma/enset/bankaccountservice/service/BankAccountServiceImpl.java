@@ -5,6 +5,7 @@ import ma.enset.bankaccountservice.domain.BankAccount;
 import ma.enset.bankaccountservice.dtos.BankAccountRequestDto;
 import ma.enset.bankaccountservice.dtos.BankAccountResponseDto;
 import ma.enset.bankaccountservice.exceptions.AccountNotFoundException;
+import ma.enset.bankaccountservice.feign.CustomerRestClient;
 import ma.enset.bankaccountservice.mappers.BankAccountMapper;
 import ma.enset.bankaccountservice.repository.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class BankAccountServiceImpl implements BankAccountService{
 
     @Autowired
     BankAccountMapper bankAccountMapper;
+
+    @Autowired
+    CustomerRestClient customerRestClient;
 
     @Override
     public List<BankAccountResponseDto> getAccounts() {
@@ -45,8 +49,9 @@ public class BankAccountServiceImpl implements BankAccountService{
                 .balance(bankAccountRequestDto.getBalance())
                 .currency(bankAccountRequestDto.getCurrency())
                 .customerId(bankAccountRequestDto.getCustomerId())
+                .customer(customerRestClient.getCustomer(bankAccountRequestDto.getCustomerId()))
                 .build();
         BankAccount savedAccount =  bankAccountRepository.save(bankAccount);
-        return bankAccountMapper.fromBankAccount(bankAccount);
+        return bankAccountMapper.fromBankAccount(savedAccount);
     }
 }

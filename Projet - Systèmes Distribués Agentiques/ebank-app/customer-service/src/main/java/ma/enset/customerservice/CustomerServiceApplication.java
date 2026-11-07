@@ -24,7 +24,6 @@ public class CustomerServiceApplication {
                     .name("user")
                     .email("user@gmail.com")
                     .build();
-
             customerService.addCustomer(customerRequestDto);
 
             CustomerRequestDto customerRequestDto2 = CustomerRequestDto.builder()
