@@ -5,8 +5,10 @@ import ma.enset.bankaccountservice.domain.BankAccount;
 import ma.enset.bankaccountservice.dtos.BankAccountRequestDto;
 import ma.enset.bankaccountservice.dtos.BankAccountResponseDto;
 import ma.enset.bankaccountservice.exceptions.AccountNotFoundException;
+import ma.enset.bankaccountservice.exceptions.CustomerNotFoundException;
 import ma.enset.bankaccountservice.feign.CustomerRestClient;
 import ma.enset.bankaccountservice.mappers.BankAccountMapper;
+import ma.enset.bankaccountservice.model.Customer;
 import ma.enset.bankaccountservice.repository.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,16 +44,24 @@ public class BankAccountServiceImpl implements BankAccountService{
 
     @Override
     public BankAccountResponseDto addAccount(BankAccountRequestDto bankAccountRequestDto) {
-        BankAccount bankAccount = BankAccount.builder()
-                .id(UUID.randomUUID().toString())
-                .createdAt(new Date())
-                .type(bankAccountRequestDto.getType())
-                .balance(bankAccountRequestDto.getBalance())
-                .currency(bankAccountRequestDto.getCurrency())
-                .customerId(bankAccountRequestDto.getCustomerId())
-                .customer(customerRestClient.getCustomer(bankAccountRequestDto.getCustomerId()))
-                .build();
-        BankAccount savedAccount =  bankAccountRepository.save(bankAccount);
-        return bankAccountMapper.fromBankAccount(savedAccount);
+
+        try {
+            Customer customer = customerRestClient.getCustomer(bankAccountRequestDto.getCustomerId());
+            BankAccount bankAccount = BankAccount.builder()
+                    .id(UUID.randomUUID().toString())
+                    .createdAt(new Date())
+                    .type(bankAccountRequestDto.getType())
+                    .balance(bankAccountRequestDto.getBalance())
+                    .currency(bankAccountRequestDto.getCurrency())
+                    .customerId(bankAccountRequestDto.getCustomerId())
+                    .customer(customer)
+                    .build();
+            BankAccount savedAccount =  bankAccountRepository.save(bankAccount);
+            return bankAccountMapper.fromBankAccount(savedAccount);
+
+        }catch (CustomerNotFoundException ex){
+            throw new CustomerNotFoundException(String.format("There is no customer with the id: %s",
+                    bankAccountRequestDto.getCustomerId()));
+        }
     }
 }
