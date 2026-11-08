@@ -58,7 +58,7 @@ public class BankAccountServiceApplication {
                     .accountID(accountId)
                     .build();
 
-            bankAccountService.creditTransaction(transactionRequestDto2);
+            bankAccountService.debitTransaction(transactionRequestDto2);
 
         };
     }

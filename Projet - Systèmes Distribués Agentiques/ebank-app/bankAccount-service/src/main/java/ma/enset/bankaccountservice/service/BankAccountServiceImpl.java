@@ -43,6 +43,9 @@ public class BankAccountServiceImpl implements BankAccountService{
     @Override
     public List<BankAccountResponseDto> getAccounts() {
         List<BankAccount> bankAccounts =  bankAccountRepository.findAll();
+        bankAccounts.forEach(bankAccount -> {
+            bankAccount.setCustomer(customerRestClient.getCustomer(bankAccount.getCustomerId()));
+        });
         return bankAccounts.stream().map(bankAccount -> bankAccountMapper.fromBankAccount(bankAccount)).toList();
     }
 
@@ -50,6 +53,9 @@ public class BankAccountServiceImpl implements BankAccountService{
     public BankAccountResponseDto getAccount(String id) throws AccountNotFoundException {
         BankAccount account = bankAccountRepository.findById(id).orElseThrow(()->
                 new AccountNotFoundException(String.format("There is no account with id: %s", id)));
+
+        Customer customer = customerRestClient.getCustomer(account.getCustomerId());
+        account.setCustomer(customer);
         return bankAccountMapper.fromBankAccount(account);
     }
 
@@ -70,7 +76,7 @@ public class BankAccountServiceImpl implements BankAccountService{
             BankAccount savedAccount =  bankAccountRepository.save(bankAccount);
             return bankAccountMapper.fromBankAccount(savedAccount);
 
-        }catch (CustomerNotFoundException ex){
+        }catch (Exception ex){
             throw new CustomerNotFoundException(String.format("There is no customer with the id: %s",
                     bankAccountRequestDto.getCustomerId()));
         }
