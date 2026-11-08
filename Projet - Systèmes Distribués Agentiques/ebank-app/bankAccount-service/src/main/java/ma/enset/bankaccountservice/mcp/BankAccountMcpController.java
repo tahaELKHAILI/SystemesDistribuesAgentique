@@ -31,7 +31,8 @@ public class BankAccountMcpController {
 
     @McpTool(description = "Add a new account")
     public BankAccountResponseDto addAccount(
-            @McpArg(description = "Account information (balance, currency, type and customerId)") BankAccountRequestDto bankAccountRequestDto) {
+            @McpArg(description = "Account information json {balance in double format, " +
+                    "currency string, type string, customerId string}") BankAccountRequestDto bankAccountRequestDto) {
         return bankAccountService.addAccount(bankAccountRequestDto);
     }
 
@@ -48,13 +49,13 @@ public class BankAccountMcpController {
 
     @McpTool(description = "Debit an amount of money from the account balance")
     public TransactionResponseDto debitTransaction(
-            @McpArg(description = "Transaction information (amount, type and accountId") TransactionRequestDto transactionRequestDto) throws AccountNotFoundException {
+            @McpArg(description = "Transaction information json {amount in double format, type as string, accountId as string}") TransactionRequestDto transactionRequestDto) throws AccountNotFoundException {
         return bankAccountService.debitTransaction(transactionRequestDto);
     }
 
     @McpTool(description = "Credit an amount of money from the account balance")
     public TransactionResponseDto creditTransaction(
-            @McpArg(description = "Transaction information (amount, type and accountId") TransactionRequestDto transactionRequestDto) throws AccountNotFoundException {
+            @McpArg(description = "Transaction information json {amount in double format, type as string, accountId as string}") TransactionRequestDto transactionRequestDto) throws AccountNotFoundException {
         return bankAccountService.creditTransaction(transactionRequestDto);
     }
 }
