@@ -3,6 +3,8 @@ package ma.enset.bankaccountservice.web;
 import ma.enset.bankaccountservice.domain.BankAccount;
 import ma.enset.bankaccountservice.dtos.BankAccountRequestDto;
 import ma.enset.bankaccountservice.dtos.BankAccountResponseDto;
+import ma.enset.bankaccountservice.dtos.TransactionRequestDto;
+import ma.enset.bankaccountservice.dtos.TransactionResponseDto;
 import ma.enset.bankaccountservice.exceptions.AccountNotFoundException;
 import ma.enset.bankaccountservice.exceptions.CustomerNotFoundException;
 import ma.enset.bankaccountservice.service.BankAccountService;
@@ -29,6 +31,26 @@ public class BankAccountRestController {
     @PostMapping("/bankAccounts")
     public BankAccountResponseDto addAccount(@RequestBody BankAccountRequestDto bankAccountRequestDto) {
         return bankAccountService.addAccount(bankAccountRequestDto);
+    }
+
+    @GetMapping("/bankAccounts/transactions")
+    public List<TransactionResponseDto> getTransactions(){
+        return bankAccountService.getTransactions();
+    }
+
+    @GetMapping("/bankAccounts/{accountId}/transactions")
+    public List<TransactionResponseDto> getTransactionsByCustomer(@PathVariable String accountId) throws AccountNotFoundException{
+        return bankAccountService.getTransactionsByCustomer(accountId);
+    }
+
+    @PostMapping("/bankAccounts/debit")
+    public TransactionResponseDto debitTransaction(@RequestBody TransactionRequestDto transactionRequestDto) throws AccountNotFoundException{
+        return bankAccountService.debitTransaction(transactionRequestDto);
+    }
+
+    @PostMapping("/bankAccounts/credit")
+    public TransactionResponseDto creditTransaction(@RequestBody TransactionRequestDto transactionRequestDto) throws AccountNotFoundException{
+        return bankAccountService.creditTransaction(transactionRequestDto);
     }
 
     @ExceptionHandler
