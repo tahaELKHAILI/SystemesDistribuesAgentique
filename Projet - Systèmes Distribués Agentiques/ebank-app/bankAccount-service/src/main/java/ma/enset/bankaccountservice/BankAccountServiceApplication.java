@@ -2,7 +2,9 @@ package ma.enset.bankaccountservice;
 
 import ma.enset.bankaccountservice.domain.BankAccount;
 import ma.enset.bankaccountservice.dtos.BankAccountRequestDto;
+import ma.enset.bankaccountservice.dtos.TransactionRequestDto;
 import ma.enset.bankaccountservice.enums.AccountType;
+import ma.enset.bankaccountservice.enums.TransactionType;
 import ma.enset.bankaccountservice.feign.CustomerRestClient;
 import ma.enset.bankaccountservice.service.BankAccountService;
 import org.springframework.boot.CommandLineRunner;
@@ -39,6 +41,25 @@ public class BankAccountServiceApplication {
                     .build();
 
             bankAccountService.addAccount(bankAccountRequestDto2);
+
+            String accountId= bankAccountService.getAccounts().get(0).getId();
+
+            TransactionRequestDto transactionRequestDto = TransactionRequestDto.builder()
+                    .type(TransactionType.CREDIT)
+                    .amount(30000.0)
+                    .accountID(accountId)
+                    .build();
+
+            bankAccountService.creditTransaction(transactionRequestDto);
+
+            TransactionRequestDto transactionRequestDto2 = TransactionRequestDto.builder()
+                    .type(TransactionType.DEBIT)
+                    .amount(300.0)
+                    .accountID(accountId)
+                    .build();
+
+            bankAccountService.creditTransaction(transactionRequestDto2);
+
         };
     }
 }
