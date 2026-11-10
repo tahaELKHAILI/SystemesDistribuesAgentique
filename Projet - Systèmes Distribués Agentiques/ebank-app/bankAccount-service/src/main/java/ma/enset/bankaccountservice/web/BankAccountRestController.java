@@ -39,8 +39,8 @@ public class BankAccountRestController {
     }
 
     @GetMapping("/bankAccounts/{accountId}/transactions")
-    public List<TransactionResponseDto> getTransactionsByCustomer(@PathVariable String accountId) throws AccountNotFoundException{
-        return bankAccountService.getTransactionsByCustomer(accountId);
+    public List<TransactionResponseDto> getTransactionsByAccount(@PathVariable String accountId) throws AccountNotFoundException{
+        return bankAccountService.getTransactionsByAccount(accountId);
     }
 
     @PostMapping("/bankAccounts/debit")

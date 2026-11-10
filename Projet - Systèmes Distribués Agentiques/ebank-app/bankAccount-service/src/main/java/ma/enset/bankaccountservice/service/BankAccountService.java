@@ -15,7 +15,7 @@ public interface BankAccountService {
 
     List<TransactionResponseDto> getTransactions();
 
-    List<TransactionResponseDto> getTransactionsByCustomer(String id) throws AccountNotFoundException;
+    List<TransactionResponseDto> getTransactionsByAccount(String accountId) throws AccountNotFoundException;
 
     public TransactionResponseDto debitTransaction(TransactionRequestDto transactionRequestDto) throws AccountNotFoundException;
     public TransactionResponseDto creditTransaction(TransactionRequestDto transactionRequestDto) throws AccountNotFoundException;

@@ -89,7 +89,7 @@ public class BankAccountServiceImpl implements BankAccountService{
         ).toList();
     }
     @Override
-    public List<TransactionResponseDto> getTransactionsByCustomer(String accountId) throws AccountNotFoundException{
+    public List<TransactionResponseDto> getTransactionsByAccount(String accountId) throws AccountNotFoundException{
         BankAccount account = bankAccountRepository.findById(accountId).orElseThrow(()->
                 new AccountNotFoundException(String.format("There is no account with id %s", accountId)));
         List<Transaction> transactions = transactionRepository.findTransactionByAccountID(accountId);
