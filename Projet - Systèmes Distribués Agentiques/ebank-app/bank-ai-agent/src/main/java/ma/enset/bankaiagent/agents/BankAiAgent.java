@@ -11,7 +11,7 @@ public class BankAiAgent {
 
     private ChatClient chatClient;
 
-    public BankAiAgent(ChatClient.Builder chatClient, ToolCallbackProvider tools, ChatMemory chatMemory){
+    public BankAiAgent(ChatClient.Builder chatClient, ToolCallbackProvider tools){
         this.chatClient = chatClient
                 .defaultSystem("""
                         You are an assistant who supposed to answer user questions about clients, bank accounts
@@ -20,7 +20,6 @@ public class BankAiAgent {
                         if some values like balance, amount are provided, make sure they are of type double and not
                         String.
                         """)
-                .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build())
                 .defaultTools(tools)
                 .build();
     }
