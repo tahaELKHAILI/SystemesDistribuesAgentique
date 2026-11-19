@@ -18,7 +18,6 @@ public class CustomerServiceApplication {
     CommandLineRunner start (CustomerServiceInterface customerServiceInterface){
         return args -> {
             Customer customer1 = Customer.builder()
-                    .id(1)
                     .name("Jon")
                     .email("jon@mail.com")
                     .build();
@@ -26,7 +25,6 @@ public class CustomerServiceApplication {
             customerServiceInterface.addCustomer(customer1);
 
             Customer customer2 = Customer.builder()
-                    .id(2)
                     .name("Jane")
                     .email("jane@mail.com")
                     .build();

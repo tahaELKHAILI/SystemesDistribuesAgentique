@@ -23,7 +23,7 @@ public class CustomerServiceImpl implements CustomerServiceInterface{
     }
 
     @Override
-    public Customer getCustomer(Integer id) throws CustomerNotFoundException {
+    public Customer getCustomer(Long id) throws CustomerNotFoundException {
         Customer customer = customerRepository.findById(id).orElseThrow(() ->
                 new CustomerNotFoundException(String.format("There is no customer with id %d", id)));
         return customer;
@@ -32,7 +32,6 @@ public class CustomerServiceImpl implements CustomerServiceInterface{
     @Override
     public Customer addCustomer(Customer customer) {
         Customer newCustomer = Customer.builder()
-                .id(customer.getId())
                 .name(customer.getName())
                 .email(customer.getEmail())
                 .build();
@@ -41,7 +40,7 @@ public class CustomerServiceImpl implements CustomerServiceInterface{
     }
 
     @Override
-    public Customer updateCustomer(Integer id, Customer customer) throws CustomerNotFoundException {
+    public Customer updateCustomer(Long id, Customer customer) throws CustomerNotFoundException {
         Customer customerModify = customerRepository.findById(id).orElseThrow(() ->
                 new CustomerNotFoundException(String.format("There is no customer with the id %d", id)));
 
@@ -52,7 +51,7 @@ public class CustomerServiceImpl implements CustomerServiceInterface{
     }
 
     @Override
-    public void deleteCustomer(Integer id) {
+    public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
     }
 }

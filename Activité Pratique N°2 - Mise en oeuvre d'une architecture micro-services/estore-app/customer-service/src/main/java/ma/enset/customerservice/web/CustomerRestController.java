@@ -22,7 +22,7 @@ public class CustomerRestController {
     }
 
     @GetMapping("/customers/{id}")
-    public Customer getCustomers(@PathVariable Integer id) throws CustomerNotFoundException {
+    public Customer getCustomers(@PathVariable Long id) throws CustomerNotFoundException {
         return customerServiceInterface.getCustomer(id);
     }
 
@@ -32,13 +32,13 @@ public class CustomerRestController {
     }
 
     @PutMapping("/customers/{id}")
-    public Customer updateCustomer(@PathVariable Integer id, @RequestBody Customer customer)
+    public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer customer)
             throws CustomerNotFoundException{
         return customerServiceInterface.updateCustomer(id, customer);
     }
 
     @DeleteMapping("/customer/{id}")
-    public void deleteCustomer(@PathVariable Integer id){
+    public void deleteCustomer(@PathVariable Long id){
         customerServiceInterface.deleteCustomer(id);
     }
 

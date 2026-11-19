@@ -9,8 +9,8 @@ import java.util.List;
 public interface CustomerServiceInterface {
 
     public List<Customer> getCustomers();
-    public Customer getCustomer(Integer id) throws CustomerNotFoundException;
+    public Customer getCustomer(Long id) throws CustomerNotFoundException;
     public Customer addCustomer(Customer customer);
-    public Customer updateCustomer(Integer id, Customer customer) throws CustomerNotFoundException;
-    public void deleteCustomer(Integer id);
+    public Customer updateCustomer(Long id, Customer customer) throws CustomerNotFoundException;
+    public void deleteCustomer(Long id);
 }

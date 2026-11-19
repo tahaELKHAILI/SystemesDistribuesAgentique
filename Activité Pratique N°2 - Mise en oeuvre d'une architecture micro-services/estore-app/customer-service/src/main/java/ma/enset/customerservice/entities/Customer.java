@@ -1,6 +1,7 @@
 package ma.enset.customerservice.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor @NoArgsConstructor
 public class Customer {
-    @Id
-    private Integer id;
+    @Id @GeneratedValue
+    private Long id;
     private String name;
     private String email;
 }
